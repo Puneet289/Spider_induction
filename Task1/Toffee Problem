@@ -1,0 +1,51 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+
+int main() {
+ 
+    int n,m;
+    cin>>n>>m;
+    int arr[n];
+    
+    for(int i=0;i<n;i++)
+    {
+        cin>>arr[i];
+    }
+//Uptill here the input is taken....
+    
+    sort(arr,arr+n); //Array is sorted in oreder to get the minimum cost toffee at index 0..
+    
+    int count=0;
+    
+    //if the total money we have is less than the first toffee cost(which is minimum because of the sort) we return with count value 0.
+    if(m<arr[0])
+    {
+        cout<<count<<endl;
+        return 0;
+    }
+    
+   
+    for(int i=0;i<n;i++)
+    {
+        m-=arr[i]; //Now we reduce the total cost with each passing toffee
+        
+        if(m>=0) //If the current value of m is greater than or equal to 0 (i.e, the value of current toffee can be consolidated in the value of m), we increase the value of count..
+        {
+            count++;
+        }
+        else // else if the value is less than 0, that means the cost has exceeded total value and we break the loop with the current value of count.
+        {
+            break;
+        }
+        
+    }
+    
+    cout<<count; //Print the value of count..
+        
+    return 0;
+}
