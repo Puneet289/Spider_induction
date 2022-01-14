@@ -1,0 +1,71 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+bool isPrime(int n) //Function to check if a number is prime or not by checking if it is completely divisible by any number till n/2 (return false) else true
+{
+    if(n==2||n==3)
+    {
+        return true;
+    }
+    
+    if(n<=1)
+    {
+        return false;
+    }
+    
+    for(int i=2;i<=n/2;i++)
+    {
+        if(!(n%i))
+        {
+            return false;
+        }
+    }
+    
+    return true;
+    
+}
+
+int main() {
+
+    int n,x;
+    cin>>n>>x;
+    vector<int> primes;
+    for(int i=2;i<=n;i++)  //Inserting all prime numbers till n in a vector primes...
+    {
+        if(isPrime(i))
+        {
+            primes.push_back(i);
+        }
+    }
+    
+    if(n<5 and x==0)  // Special test case if value opf x=0 and n<5 because in normal approach it will jump the loop as loop starts from i=2 and takes two previous vaklues..
+    {
+        cout<<"YES"<<endl;
+        return 0;
+    }
+    
+    int s=primes.size();
+    for(int i=2;i<s;i++)
+    {
+        for(int j=0;j<i-1;j++)
+        {
+        if(primes[j]+primes[j+1]+1==primes[i])  // if the sum of any two neighbouring prime numbers+1 is equal to the value of the current prime number we decrease the value of x
+                                                //as we get our pass case..
+        {
+            x--;
+        }
+            
+        if(x==0)    //if we find all the pass cases , x becomes zero and we print "Yes" and return the main function.
+        {
+            cout<<"YES"<<endl;
+            return 0;
+        }
+        }
+    }
+    cout<<"NO"<<endl;  // if the value of x doesn't become 0, we print "NO" and return..
+    return 0;
+}
