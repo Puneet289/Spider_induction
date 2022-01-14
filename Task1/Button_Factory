@@ -1,0 +1,29 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+
+int main() {
+
+    int p,q,r,s;
+    cin>>p>>q>>r>>s;
+    
+    //we start from the max value of(p,r)(starting time of doing work together) and end at the min value of (q,s) (ending time of doing work together) because we need to find the difference between the start and end time during which they worked together..
+    int start=max(p,r); 
+    int end=min(q,s); 
+    
+    int diff=end-start;
+    
+    if(diff<=0) //if diff<=0 this ,means that they do not work together at all. 
+    {
+        cout<<"0";
+    }
+    else  //else print the value of diff..
+    {
+        cout<<diff;
+    }
+    return 0;
+}
