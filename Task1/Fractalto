@@ -1,0 +1,28 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+/*The approach of the problem is that each upward triangle contribute to 3 triangles upwards and one triangle downwards
+and each downward triangle contributes to 3 downwards triangles and one upward triangle. 
+We just store them in two temporary variables by using "up*3+down*1" for upward triangle and "down*3+up*1" for downwards triangle and update the final variables later. Since the answer can be too large, we have to return it by taking mod of 10^9+7*/
+
+int main() {
+    
+    int n;
+    cin>>n;
+    long long int power=(pow(10,9)+7);
+    long long int up=1,down=0,upwards,downwards;
+    while(n--)
+    {
+        upwards=(up*3+down*1)%power;
+        downwards=(down*3+up*1)%power;
+        up=upwards;
+        down=downwards;
+    }
+    
+    cout<<up<<endl;
+    return 0;
+}
