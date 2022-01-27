@@ -1,0 +1,85 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+/*The approach of this problem is that we perform all the operations on first two elements
+of the given list and store them in a seperate vector called "res", then we run a loop from third array element up to the last array element and in the loop we keep on performing all the operations on the elements of "res" and the next element of array and store it in vector "temp" then after one iteration, empty "res" and fill it with values in "temp" and then empty temp as well and repeat the same for further iterations.*/
+
+
+int main() {
+    int test;
+    cin>>test;
+    while(test--)
+    {
+        long n;
+        long x;
+        cin>>n>>x;
+        long arr[n];
+        for(int i=0;i<n;i++)
+        {
+            cin>>arr[i];
+        }
+        
+        if(n<2)
+        {
+            if(arr[0]==x)
+            {
+                cout<<"YES"<<endl;
+            }
+            
+            else
+            {
+                cout<<"NO"<<endl;
+            }
+            continue;
+        }
+        
+        vector<long> res;
+        res.push_back(arr[0]+arr[1]);
+        res.push_back(arr[0]-arr[1]);
+        res.push_back(arr[0]*arr[1]);
+        if(arr[1]!=0)
+        res.push_back(arr[0]/arr[1]);
+        int j=2;
+        
+        while(j<n)
+        {
+            vector<long>temp;
+            for(int i=0;i<res.size();i++)
+            {
+                temp.push_back(res[i]+arr[j]);
+                temp.push_back(res[i]-arr[j]);
+                temp.push_back(res[i]*arr[j]);
+                if(arr[j]!=0)
+                temp.push_back(res[i]/arr[j]);
+            }
+                res.clear();
+            
+            for(int i=0;i<temp.size();i++)
+            {
+                res.push_back(temp[i]);
+            }
+            temp.clear();
+            j++;
+        }
+        
+        int flag=0;
+        for(int k=0;k<res.size();k++)
+        {
+            if(res[k]==x)
+            {
+                cout<<"YES"<<endl;
+                flag=1;
+                break;
+            }
+        }
+        if(flag==0)
+        {
+            cout<<"NO"<<endl;
+        }
+    }
+    return 0;
+}
