@@ -81,8 +81,6 @@ Node* insertElements(Node* root,vector<int> arr,int i)
    Node *p,*t;
     int x;
     queue<Node*> q;
-    
-    
     root=new Node(arr[i]);
     
     q.push(root);
@@ -136,6 +134,10 @@ int main() {
     
     int n;
     cin>>n;
+    if(n==0)
+    {
+        return 0;
+    }
     int a;
     vector <int> inp;
     while(cin>>a)
