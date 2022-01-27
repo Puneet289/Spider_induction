@@ -1,0 +1,90 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+
+int main() {
+    
+    /*The approach of this problem is that we keep on checking both strings letter by letter
+    until first string is finished:-
+    1)if both are equal, we move to the next letter of both the strings and store that letter 
+    for future use.
+    2) else if the second string has a letter equal to the previous letter of the string,
+    we just move forward in second string
+    3) else if the letter of the second string is completely different we break the loop 
+    and return false as the string is different than the result expected.
+    
+    Now if the second string is longer than first string and false is not returned, we check
+    if the remaining letters of the second string:
+    1)if all remaining letters are same and equal to last letter we return true 
+    2)else we return false and print the result accordingly.*/
+    
+    
+    int test;
+    cin>>test;
+    
+    while(test--)
+    {
+        string str1;
+        cin>>str1;
+        string str2;
+        cin>>str2;
+        
+        int flag=0;
+        
+        int i=0;
+        int j=i;
+        char temp=' ';
+        
+        while(str1[i]!='\0')
+        {
+            if(str1[i]==str2[j])
+            {
+                temp=str1[i];
+                i++;
+                j++;
+            }
+            
+            else if(str2[j]==temp)
+            {
+                j++;
+            }
+            
+            else
+            {
+                flag=1;
+                break;
+            }
+            
+        }
+        
+    if(flag==0)
+        {   
+            while(str2[j]!='\0')
+            {
+                if(str2[j]!=temp)
+                {
+                    flag=1;
+                    break;
+                }
+
+                j++;
+            }
+        }
+        
+        if(flag==0)
+        {
+            cout<<"YES"<<endl;
+        }
+        
+        else
+        {
+            cout<<"NO"<<endl;
+        }
+        
+    }
+    return 0;
+}
