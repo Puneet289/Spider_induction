@@ -1,0 +1,157 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include<bits/stdc++.h>
+using namespace std;
+/*The approach of this problem after insertion of the elements of the array in the tree is that we keep on traversing the tree while adding the current root value to the variable sum and pushing the current value into a vector called "arr" Here in we check for three conditions before moving on to the next node.
+1) if sum is less than given target value "m" and the current node is the leaf node, that means the condition is not satisfied and the value of sum is decreased by the data of current node and is removed from "arr" and we move on to next node by returning current call.
+
+2) else if sum is greater than target value , that means we are in wrong direction and we rerturn the function after decrementing the current node's value.
+
+3) else if the sum is equal to the target and it is a leaf node, we simply print the array with all the values of the path and then backtrack to previous node to find another path and return the function.
+
+After a node is done traversing its both left and right subtrees , we again decrement the value of sum and removes it from array as after the procedure it backtracks for finding new path.*/
+class Node
+{   public:
+    int data;
+    Node* left,*right;
+    Node()
+    {
+        data=0;
+        left=right=NULL;
+    }
+ 
+    Node(int val)
+    {
+        data=val;
+        left=right=NULL;
+    }
+};
+
+void solution(Node*root,vector<int> arr,int sum,int m)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    sum+=root->data;    
+    arr.push_back(root->data);
+
+    
+    if(m>sum && (root->left==NULL && root->right==NULL))
+    {
+        sum-=root->data;
+        arr.erase(arr.end()-1);
+        return;
+    }
+    
+    else if(m<sum)
+    {
+        sum-=root->data;
+        arr.erase(arr.end()-1);
+
+        return;
+    }
+    
+    else if(sum==m && (root->left==NULL && root->right==NULL))
+    {
+        for(int i=0;i<arr.size();i++)
+        {
+            cout<<arr[i]<<" ";
+        }
+        cout<<endl;
+        
+        arr.erase(arr.end()-1);
+        sum-=root->data;
+        return;
+    }
+    
+    solution(root->left,arr,sum,m);
+    solution(root->right,arr,sum,m);
+    sum-=root->data;
+    arr.erase(arr.end()-1);
+    
+}
+
+Node* insertElements(Node* root,vector<int> arr,int i)
+{
+    
+   Node *p,*t;
+    int x;
+    queue<Node*> q;
+    
+    
+    root=new Node(arr[i]);
+    
+    q.push(root);
+    p=q.front();
+    
+    while(!q.empty())
+    {
+        if(2*i+2>arr.size())
+        {
+            return root;
+        }
+        p=q.front();
+        q.pop();
+        x=arr[2*i+1];
+        if(x!=-1)
+        {
+            t=new Node(x);
+            p->left=t;
+            q.push(t);
+        }
+        
+        x=arr[2*i+2];
+        i++;
+        
+        if(x!=-1)
+        {
+            t=new Node(x);
+            p->right=t;
+            q.push(t);
+        }
+    }
+
+    return root;
+}
+
+void preorder(Node* root)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    cout<<root->data;
+    preorder(root->left);
+    preorder(root->right);
+}
+
+
+
+
+int main() {
+    
+    int n;
+    cin>>n;
+    int a;
+    vector <int> inp;
+    while(cin>>a)
+    {
+        inp.push_back(a);
+    }
+    int m=*(inp.end()-1);
+    inp.erase(inp.end()-1);
+    
+    
+    Node* root=NULL;
+    root=insertElements(root,inp,0);
+    
+    vector<int>arr;
+    solution(root,arr,0,m);
+    //cout<<root->right->data;
+    //preorder(root);
+    return 0;
+}
